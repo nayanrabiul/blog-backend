@@ -1,0 +1,8 @@
+node_modules
+.idea
+.vscode
+dist
+.env.Articleion
+.env
+package.zip
+/pnpm-lock.yaml
