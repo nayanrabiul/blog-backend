@@ -1,5 +1,4 @@
 import Article from '../models/article.model';
-import { isAdmin } from '../helper/auth.healper';
 import mongoose from 'mongoose';
 import Topic from '../models/topic.model';
 import User from '../models/user.model';
@@ -40,10 +39,14 @@ export const fetchTopics = async (req, res, next) => {
 
 export const fetchTopicsPerUser = async (req, res, next) => {
     let { user } = res.locals;
+    let topic_id = req.query?.topic_id || null;
     try {
         //find all articles by user and get the topics
         let data = await Article.aggregate([
-            { $match: { user: user._id } },
+            {
+                $match: { user: user._id },
+            },
+            ...(!!topic_id ? [{ $match: { topic: new mongoose.Types.ObjectId(topic_id) } }] : []),
             {
                 $project: {
                     topic: 1,
@@ -59,7 +62,7 @@ export const fetchTopicsPerUser = async (req, res, next) => {
                 },
             },
             { $unwind: '$topic' },
-            { $project: { _id: 0, name: '$topic.name', count: 1 } },
+            { $project: { _id: 1, name: '$topic.name', count: 1 } },
         ]);
         return res.status(200).json({
             error: false,
@@ -128,11 +131,11 @@ export const delTopic = async (req, res, next) => {
 
 export const fetchArticles = async (req, res, next) => {
 
-
     try {
         //check if user authenticated
         let { query } = req;
         let username = query.username;
+        let topic_id = query.topic_id;
         let user = await User.findOne({ username });
 
         if (!user?._id) {
@@ -159,6 +162,7 @@ export const fetchArticles = async (req, res, next) => {
 
         let data = await Article.aggregate([
             matchStage,
+            ...(!!topic_id ? [{ $match: { topic:new mongoose.Types.ObjectId(topic_id) } }] : []),
             {
                 $facet: {
                     docs: [

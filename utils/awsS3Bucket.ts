@@ -1,5 +1,4 @@
 import { S3 } from 'aws-sdk';
-import { v4 as uuidv4 } from 'uuid';
 import crypto from 'crypto';
 
 export const s3Upload = async (files, self_folder) => {
