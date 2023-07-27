@@ -1,5 +1,5 @@
 {
-  "name": "Mindwriters",
+  "name": "TImes2Read",
   "version": "1.0.0",
   "main": "app.js",
   "author": "Rabiul Hasan Nayan",
@@ -26,7 +26,8 @@
     "mongoose-paginate-v2": "^1.7.1",
     "multer": "1.4.5-lts.1",
     "socket.io": "^4.7.1",
-    "ts-node-dev": "^2.0.0"
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.1.6"
   },
   "devDependencies": {
     "morgan": "^1.10.0"

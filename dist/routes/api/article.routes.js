@@ -1,0 +1,21 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const article_controller_1 = require("../../controllers/article.controller");
+const auth_healper_1 = require("../../helper/auth.healper");
+const ArticleRoutes = (0, express_1.Router)();
+ArticleRoutes.get('/topic', article_controller_1.fetchTopic);
+ArticleRoutes.get('/topics', article_controller_1.fetchTopics);
+ArticleRoutes.get('/topics-per-user', (0, auth_healper_1.auth)({ isAuth: true }), article_controller_1.fetchTopicsPerUser);
+ArticleRoutes.post('/topic', article_controller_1.postTopic);
+ArticleRoutes.delete('/topic', article_controller_1.delTopic);
+ArticleRoutes.get('/', article_controller_1.fetchArticle);
+ArticleRoutes.get('/search', article_controller_1.searchArticle);
+ArticleRoutes.get('/featured', article_controller_1.fetchFeatureArticle);
+ArticleRoutes.get('/all_article_link', article_controller_1.fetchAllArticlesLink);
+ArticleRoutes.get('/list-by-user', article_controller_1.fetchArticles);
+ArticleRoutes.get('/paginated-list', article_controller_1.paginatedFetchArticles);
+ArticleRoutes.post('/', (0, auth_healper_1.auth)({ isAuth: true }), article_controller_1.postArticle);
+ArticleRoutes.delete('/', (0, auth_healper_1.auth)({ isAuth: true }), article_controller_1.deleteArticle);
+exports.default = ArticleRoutes;
+//# sourceMappingURL=article.routes.js.map
