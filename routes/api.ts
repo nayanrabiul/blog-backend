@@ -12,7 +12,7 @@ import { uploadFile } from '../utils/s3';
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
-apiRouters.post('/uploadSingleFile', upload.single('file'), async function(req, res) {
+apiRouters.post('/uploadSingleFile', upload.single('file'), async function (req, res) {
     try {
         // @ts-ignore
         let url = await uploadFile(req.file, 'bully-mall/files/', 't');
